@@ -1,9 +1,7 @@
+const { program } = require("commander");
 const contactsOperations = require("./contacts.js");
-const yargs = require("yargs");
-const { hideBin } = require("yargs/helpers");
-
-
-
+// const yargs = require("yargs");
+// const { hideBin } = require("yargs/helpers");
 
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
@@ -37,7 +35,18 @@ async function invokeAction({ action, id, name, email, phone }) {
   }
 }
 
-const arr = hideBin(process.argv);
-const { argv } = yargs(arr);
+program
+  .option('-a, --action <type>', 'choose action')
+  .option('-i, --id <type>', 'user id')
+  .option('-n, --name <type>', 'user name')
+  .option('-e, --email <type>', 'user email')
+  .option('-p, --phone <type>', 'user phone');
 
-invokeAction(argv);
+program.parse(process.argv);
+const options = program.opts();
+invokeAction(options);
+
+
+// const arr = hideBin(process.argv);
+// const { argv } = yargs(arr);
+// invokeAction(argv);
